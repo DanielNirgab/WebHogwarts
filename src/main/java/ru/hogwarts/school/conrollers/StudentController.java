@@ -31,29 +31,37 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Student> editStudent(Student student) {
+    @PutMapping()
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student foundStudent = studentService.editStudent(student);
         if (foundStudent == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(foundStudent);
+        return ResponseEntity.ok(student);
     }
 
-    @DeleteMapping()
-    public ResponseEntity deleteStudent(long id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteStudent (@PathVariable long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudents() {
+    public ResponseEntity<Collection<Student>> getAllStudents(@RequestParam (required = false) String name,
+                                                              @RequestParam (required = false) String partName) {
+        if (name != null && name.isBlank()) {
+            ResponseEntity.ok(studentService.findByName(name));
+        }
+        if (name != null && name.isBlank()) {
+            ResponseEntity.ok(studentService.findByNamePart(partName));
+        }
+
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/rangestudents/{age}")
     public Collection<Student> getRangedStudentsByAge(@PathVariable int age) {
-        return studentService.rangeStudentsByAge(age);
+        return studentService.findStudentsByAge(age);
     }
 
 }
