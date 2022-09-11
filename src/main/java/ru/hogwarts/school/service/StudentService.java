@@ -52,4 +52,8 @@ public class StudentService {
         return studentRepositories.findAllByNameContainsIgnoreCase(part);
     }
 
+    public Collection<Student> findStudentsAgesBetween(int ageStart, int ageEnd) {
+        return studentRepositories.findByAgeBetween(ageStart, ageEnd);
+    }
+
 }

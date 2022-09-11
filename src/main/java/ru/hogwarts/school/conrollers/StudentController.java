@@ -64,4 +64,14 @@ public class StudentController {
         return studentService.findStudentsByAge(age);
     }
 
+    @GetMapping("/rangestudents/age_between")
+    public Collection<Student> getStudentsAgeBetween(@RequestParam int ageStart, @RequestParam int ageEnd) {
+        return studentService.findStudentsAgesBetween(ageStart, ageEnd);
+    }
+
+    @GetMapping("/student_faculty/{id}")
+    public ResponseEntity getStudentFaculty(@PathVariable long id) {
+        return ResponseEntity.ok(studentService.getStudent(id).getFaculty());
+    }
+
 }
