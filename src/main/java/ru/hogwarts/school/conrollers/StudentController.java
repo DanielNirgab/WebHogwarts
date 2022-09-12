@@ -3,6 +3,7 @@ package ru.hogwarts.school.conrollers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -69,8 +70,8 @@ public class StudentController {
         return studentService.findStudentsAgesBetween(ageStart, ageEnd);
     }
 
-    @GetMapping("/student_faculty/{id}")
-    public ResponseEntity getStudentFaculty(@PathVariable long id) {
+    @GetMapping("/{id}/faculty/")
+    public ResponseEntity <Faculty> getStudentFaculty(@PathVariable long id) {
         return ResponseEntity.ok(studentService.getStudent(id).getFaculty());
     }
 

@@ -58,9 +58,14 @@ public class FacultyController {
         return facultyService.rangeFacultiesByColor(color);
     }
 
-    @GetMapping("/faculty_students/{id}")
+    @GetMapping("/{id}/students/")
     public ResponseEntity<Collection<Student>> getFacultyStudents(@PathVariable long id) {
         return ResponseEntity.ok(facultyService.getFaculty(id).getStudentSet());
+    }
+
+    @GetMapping("{nameOrColor}/faculties")
+    public Collection<Faculty> getFacultiesByNameOrColor(@PathVariable String nameOrColor) {
+        return facultyService.getFacultiesByNameOrColor(nameOrColor, nameOrColor);
     }
 
 }
