@@ -48,7 +48,7 @@ public class FacultyController {
 
     }
 
-    @GetMapping("/allStudents")
+    @GetMapping()
     public ResponseEntity<Collection<Faculty>> getAllFaculties() {
         return ResponseEntity.ok(facultyService.getAllFaculties());
     }
@@ -63,7 +63,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.getFaculty(id).getStudentSet());
     }
 
-    @GetMapping()
+    @GetMapping("/findFaculty")
     public Collection<Faculty> getFacultiesByNameOrColor(@RequestParam String nameOrColor) {
         return facultyService.getFacultiesByNameOrColor(nameOrColor, nameOrColor);
     }
