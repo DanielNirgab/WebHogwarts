@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -8,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Faculty {
     @Id
     @GeneratedValue
@@ -16,7 +18,8 @@ public class Faculty {
     private String color;
 
     @OneToMany(mappedBy = "faculty")
-    private Set <Student> studentSet;
+    @JsonIgnore
+    private Collection <Student> studentSet;
 
     public Faculty(Long id, String name, String color) {
         this.id = id;
@@ -74,7 +77,7 @@ public class Faculty {
                 '}';
     }
 
-    public Set<Student> getStudentSet() {
+    public Collection <Student> getStudentSet() {
         return studentSet;
     }
 }

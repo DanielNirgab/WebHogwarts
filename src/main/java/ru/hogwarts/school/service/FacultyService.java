@@ -26,14 +26,16 @@ public class FacultyService {
     }
 
     public Faculty editFaculty(Faculty faculty) {
-        Faculty facultyToUpdate = facultyRepositories.getReferenceById(faculty.getId());
+        Faculty facultyToUpdate = facultyRepositories.findFacultyById(faculty.getId());
         facultyToUpdate.setName(faculty.getName());
         facultyToUpdate.setColor(faculty.getColor());
         return facultyRepositories.save(facultyToUpdate);
     }
 
-    public void deleteFaculty(long id) {
-        facultyRepositories.deleteById(id);
+    public Faculty deleteFaculty(Long id) {
+        Faculty foundedFaculty = facultyRepositories.findFacultyById(id);
+       facultyRepositories.deleteById(id);
+       return foundedFaculty;
     }
 
     public List<Faculty> getAllFaculties() {
