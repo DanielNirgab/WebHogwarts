@@ -18,7 +18,7 @@ public class StudentByCategoryService {
         return categoryRepository.getCountOfStudents();
     }
 
-    public Integer getAverageStudentAge() {
+    public Double getAverageStudentAge() {
         return categoryRepository.getAverageStudentAge();
     }
 

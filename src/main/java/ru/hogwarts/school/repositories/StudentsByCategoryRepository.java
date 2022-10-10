@@ -8,11 +8,11 @@ import ru.hogwarts.school.model.Student;
 import java.util.List;
 
 @Repository
-public interface StudentsByCategoryRepository extends JpaRepository<Student, Integer> {
+public interface StudentsByCategoryRepository extends JpaRepository<Student, Long> {
     @Query(value = "SELECT COUNT(*) FROM student", nativeQuery = true)
     Integer getCountOfStudents ();
     @Query(value = "SELECT AVG(age) as age FROM student", nativeQuery = true)
-    Integer getAverageStudentAge();
+    Double getAverageStudentAge();
     @Query (value = "SELECT * FROM student ORDER BY id DESC LIMIT 5", nativeQuery = true)
     List<Student> showLastStudentList();
 

@@ -24,7 +24,7 @@ public class StudentByCategoryController {
     }
 
     @GetMapping("/avgage")
-    public Integer getAverageStudentsAge() {
+    public Double getAverageStudentsAge() {
         return byCategoryService.getAverageStudentAge();
     }
 
