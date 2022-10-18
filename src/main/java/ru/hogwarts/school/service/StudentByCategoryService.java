@@ -16,7 +16,7 @@ public class StudentByCategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    Logger logger = LoggerFactory.getLogger(StudentByCategoryService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentByCategoryService.class);
     public Integer getCountOfStudents() {
         logger.info("Was invoked method for getting count of students");
         return categoryRepository.getCountOfStudents();

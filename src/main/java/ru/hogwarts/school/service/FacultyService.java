@@ -19,7 +19,7 @@ public class FacultyService {
         this.facultyRepositories = facultyRepositories;
     }
 
-    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     public Faculty createFaculty(Faculty faculty) {
         logger.debug("Requesting faculty:{}", faculty);

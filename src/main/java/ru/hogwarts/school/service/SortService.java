@@ -18,7 +18,7 @@ public class SortService {
         this.studentRepositories = studentRepositories;
     }
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public Collection<String> sortStudentsByFirstLetter(String letter) {
         logger.debug("Requesting first letter");
