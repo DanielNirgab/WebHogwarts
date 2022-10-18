@@ -1,41 +1,78 @@
-    @Test
-    public void testCreateStudent () throws Exception {
-        Student student = new Student("StudentTest", 13);
-        HttpEntity<Student> entity = new HttpEntity<>(student);
-        ResponseEntity<Student> responsePost = this.restTemplate.exchange("/student/", HttpMethod.POST, entity, Student.class);
+package ru.hogwarts.school.service;
 
-        assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", student, Student.class))
-                .isNotNull();
-        assertThat(responsePost.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responsePost.getBody()).isNotNull();
-        assertThat(responsePost.getBody().getName()).isNotNull();
-        assertThat(responsePost.getBody().getAge()).isNotNull();
-        assertThat(responsePost.getBody().getId()).isNotNull();
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentRepositories;
+
+import java.util.*;
+
+
+@Service
+
+public class StudentService {
+
+    private final StudentRepositories studentRepositories;
+
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
+    public StudentService(StudentRepositories studentRepositories) {
+        this.studentRepositories = studentRepositories;
     }
 
-    @Test
-    public void testGetStudentById () throws Exception {
-        Student student = new Student("StudentTest", 13);
-        HttpEntity<Student> entity = new HttpEntity<>(student);
-        ResponseEntity<Student> responsePost = this.restTemplate.exchange("/student/", HttpMethod.POST, entity, Student.class);
-        assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", student, Student.class, student.getId()))
-                .isNotNull();
-
-        ResponseEntity<Student> responseGET = restTemplate.getForEntity("http://localhost:" + port + "/student/" +
-                responsePost.getBody().getId(), Student.class);
-        assertThat(responsePost.getBody().getName()).isEqualTo("StudentTest");
-        assertThat(responsePost.getBody().getAge()).isEqualTo(13);
+    public Student createStudent(Student student) {
+        logger.info("Was invoked method for create student");
+        return studentRepositories.save(student);
     }
 
-    @Test
-    public void testUpdateStudent () {
-        Student secondStudent = new Student("SecondTestStudent", 29);
-        HttpEntity<Student> entity = new HttpEntity<Student>(secondStudent);
-
-        ResponseEntity<Student> responsePUT = restTemplate.exchange("/student", HttpMethod.PUT, entity, Student.class, secondStudent.getId());
-
-        assertThat(responsePUT.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responsePUT.getBody().getId()).isNotNull();
-        assertThat(responsePUT.getBody().getName()).isEqualTo("SecondTestStudent");
-        assertThat(responsePUT.getBody().getAge()).isEqualTo(29);
+    public Student getStudent(Long id) {
+        logger.debug("Requesting id");
+        logger.info("Was invoked method for getting student");
+        return studentRepositories.findById(id).get();
     }
+
+    public Student editStudent(Student student) {
+        logger.debug("Requesting student");
+        logger.info("Was invoked method for update student");
+        Student studentToUpdate = studentRepositories.getReferenceById(student.getId());
+        studentToUpdate.setName(student.getName());
+        studentToUpdate.setAge(student.getAge());
+        return studentRepositories.save(studentToUpdate);
+    }
+
+    public void deleteStudent(long id) {
+        logger.info("Was invoked method for delete student");
+        studentRepositories.deleteById(id);
+    }
+
+    public List<Student> getAllStudents() {
+        logger.info("Was invoked method for getting all students");
+        return studentRepositories.findAll();
+    }
+
+
+    public Student findByName (String name) {
+        logger.debug("Requesting name");
+        logger.info("Was invoked method for searching student by name");
+        return studentRepositories.findByNameContains(name);
+    }
+
+    public Collection<Student> findStudentsByAge(int age) {
+        logger.info("Was invoked method for searching student by age");
+        return studentRepositories.findStudentByAge(age);
+    }
+
+    public Collection<Student> findByNamePart(String part) {
+        logger.info("Was invoked method for searching student by part name");
+        return studentRepositories.findAllByNameContainsIgnoreCase(part);
+    }
+
+    public Collection<Student> findStudentsAgesBetween(int ageStart, int ageEnd) {
+        logger.info("Was invoked method for searching student by age between" + ageStart +
+                " " + ageEnd);
+        return studentRepositories.findByAgeBetween(ageStart, ageEnd);
+    }
+
+
+}

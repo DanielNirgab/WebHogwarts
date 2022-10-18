@@ -81,5 +81,4 @@ public class StudentController {
     public ResponseEntity <Faculty> getStudentFaculty(@PathVariable long id) {
         return ResponseEntity.ok(studentService.getStudent(id).getFaculty());
     }
-
 }
