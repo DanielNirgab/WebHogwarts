@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepositories;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -14,7 +15,7 @@ public class StudentService {
 
     private final StudentRepositories studentRepositories;
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepositories studentRepositories) {
         this.studentRepositories = studentRepositories;
@@ -51,7 +52,7 @@ public class StudentService {
     }
 
 
-    public Student findByName (String name) {
+    public Student findByName(String name) {
         logger.debug("Requesting name");
         logger.info("Was invoked method for searching student by name");
         return studentRepositories.findByNameContains(name);
@@ -72,4 +73,6 @@ public class StudentService {
                 " " + ageEnd);
         return studentRepositories.findByAgeBetween(ageStart, ageEnd);
     }
+
+
 }
