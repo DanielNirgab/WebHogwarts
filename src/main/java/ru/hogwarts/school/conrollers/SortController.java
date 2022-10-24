@@ -30,17 +30,17 @@ public class SortController {
     }
 
     @GetMapping("/average-age")
-    public ResponseEntity getStudentAverageAge() {
+    public ResponseEntity<Double> getStudentAverageAge() {
        return ResponseEntity.ok(sortService.sortStudentByAverageAge());
     }
 
     @GetMapping("/max-length")
-    public ResponseEntity getFacultyNameMaxLength() {
+    public ResponseEntity<String> getFacultyNameMaxLength() {
         return ResponseEntity.ok(facultyService.getFacultyNameMaxLength());
     }
 
     @GetMapping("/getSum")
-    public ResponseEntity getSum() {
+    public ResponseEntity<Integer> getSum() {
 
         return ResponseEntity.ok(sortService.getSum());
     }

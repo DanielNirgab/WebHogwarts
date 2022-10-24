@@ -31,7 +31,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity getStudent(@PathVariable long id) {
+    public ResponseEntity<Student> getStudent(@PathVariable long id) {
         Student student = studentService.getStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -49,7 +49,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteStudent (@PathVariable long id) {
+    public ResponseEntity<Student> deleteStudent (@PathVariable long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
@@ -81,4 +81,15 @@ public class StudentController {
     public ResponseEntity <Faculty> getStudentFaculty(@PathVariable long id) {
         return ResponseEntity.ok(studentService.getStudent(id).getFaculty());
     }
+
+    @GetMapping("/threads")
+    public void getNamesUsingStreams() {
+        studentService.returnNamesUsingStreams();
+    }
+
+    @GetMapping("/namesPairs")
+    public void getNamesPairs() {
+        studentService.getNamesPairs();
+    }
+
 }
